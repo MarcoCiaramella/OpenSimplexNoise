@@ -2,7 +2,7 @@
 [![](https://jitpack.io/v/MarcoCiaramella/OpenSimplexNoise.svg)](https://jitpack.io/#MarcoCiaramella/OpenSimplexNoise)
 
 The Android library from the gist https://gist.github.com/KdotJPG/b1270127455a94ac5d19
-## How to import in your Androdi project
+## How to import in your Android project
 Add it in your root build.gradle at the end of repositories:
 
 ```
