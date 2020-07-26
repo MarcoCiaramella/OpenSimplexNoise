@@ -37,7 +37,7 @@ public class Heightmap {
         OpenSimplexNoise noise = new OpenSimplexNoise();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double value01 = (noise.eval(x / featureSize, y / featureSize, 0.0)+1) / 2;
+                double value01 = (noise.eval(x / (float)featureSize, y / (float)featureSize, 0.0)+1) / 2;
                 addVertex(x,y,value01);
                 addIndex(x,y);
             }
