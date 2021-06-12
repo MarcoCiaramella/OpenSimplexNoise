@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <string.h>
+#include <jni.h>
 #include "OpenSimplex2F.h"
 
 
@@ -492,7 +493,8 @@ double _noise2_Base(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xs, d
 /**
 	 * 2D Simplex noise, standard lattice orientation.
 	 */
-double noise2(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y){
+JNIEXPORT jdouble JNICALL
+double Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise2(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y){
 
 	// Get points for A2* lattice
 	double s = 0.366025403784439 * (x + y);
@@ -506,7 +508,8 @@ double noise2(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y
 	 * Might be better for a 2D sandbox style game, where Y is vertical.
 	 * Probably slightly less optimal for heightmaps or continent maps.
 	 */
-double noise2_XBeforeY(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y){
+JNIEXPORT jdouble JNICALL
+double Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise2_XBeforeY(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y){
 
 	// Skew transform and rotation baked into one.
 	double xx = x * 0.7071067811865476;
@@ -559,7 +562,8 @@ double _noise3_BCC(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xr, do
 	 * Proper substitute for 3D Simplex in light of Forbidden Formulae.
 	 * Use noise3_XYBeforeZ or noise3_XZBeforeY instead, wherever appropriate.
 	 */
-double noise3_Classic(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z){
+JNIEXPORT jdouble JNICALL
+double Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise3_Classic(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z){
 
 	// Re-orient the cubic lattices via rotation, to produce the expected look on cardinal planar slices.
 	// If texturing objects that don't tend to have cardinal plane faces, you could even remove this.
@@ -579,7 +583,8 @@ double noise3_Classic(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, 
 	 * If Z is vertical in world coordinates, call noise3_XYBeforeZ(x, y, Z).
 	 * For a time varied animation, call noise3_XYBeforeZ(x, y, T).
 	 */
-double noise3_XYBeforeZ(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z){
+JNIEXPORT jdouble JNICALL
+double Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise3_XYBeforeZ(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z){
 
 	// Re-orient the cubic lattices without skewing, to make X and Y triangular like 2D.
 	// Orthonormal rotation. Not a skew transform.
@@ -601,7 +606,8 @@ double noise3_XYBeforeZ(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x
 	 * If Z is vertical in world coordinates, call noise3_XZBeforeY(x, Z, y) or use noise3_XYBeforeZ.
 	 * For a time varied animation, call noise3_XZBeforeY(x, T, y) or use noise3_XYBeforeZ.
 	 */
-double noise3_XZBeforeY(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z){
+JNIEXPORT jdouble JNICALL
+double Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise3_XZBeforeY(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z){
 
 	// Re-orient the cubic lattices without skewing, to make X and Z triangular like 2D.
 	// Orthonormal rotation. Not a skew transform.
@@ -774,7 +780,8 @@ double _noise4_Base(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xs, d
 /**
 	 * 4D OpenSimplex2F noise, classic lattice orientation.
 	 */
-double noise4_Classic(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z, double w){
+JNIEXPORT jdouble JNICALL
+double Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4_Classic(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z, double w){
 
 	// Get points for A4 lattice
 	double s = -0.138196601125011 * (x + y + z + w);
@@ -788,7 +795,8 @@ double noise4_Classic(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, 
 	 * Recommended for 3D terrain, where X and Y (or Z and W) are horizontal.
 	 * Recommended for noise(x, y, sin(time), cos(time)) trick.
 	 */
-double noise4_XYBeforeZW(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z, double w){
+JNIEXPORT jdouble JNICALL
+double Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4_XYBeforeZW(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z, double w){
 
 	double s2 = (x + y) * -0.178275657951399372 + (z + w) * 0.215623393288842828;
 	double t2 = (z + w) * -0.403949762580207112 + (x + y) * -0.375199083010075342;
@@ -801,7 +809,8 @@ double noise4_XYBeforeZW(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double 
 	 * 4D OpenSimplex2F noise, with XZ and YW forming orthogonal triangular-based planes.
 	 * Recommended for 3D terrain, where X and Z (or Y and W) are horizontal.
 	 */
-double noise4_XZBeforeYW(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z, double w){
+JNIEXPORT jdouble JNICALL
+double Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4_XZBeforeYW(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z, double w){
 
 	double s2 = (x + z) * -0.178275657951399372 + (y + w) * 0.215623393288842828;
 	double t2 = (y + w) * -0.403949762580207112 + (x + z) * -0.375199083010075342;
@@ -815,7 +824,8 @@ double noise4_XZBeforeYW(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double 
 	 * and W for an extra degree of freedom. W repeats eventually.
 	 * Recommended for time-varied animations which texture a 3D object (W=time)
 	 */
-double noise4_XYZBeforeW(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z, double w){
+JNIEXPORT jdouble JNICALL
+double Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4_XYZBeforeW(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double x, double y, double z, double w){
 
 	double xyz = x + y + z;
 	double ww = w * 0.2236067977499788;
