@@ -18,21 +18,21 @@ public class OpenSimplex2F {
         System.loadLibrary("OpenSimplex2F");
     }
 
-    public native double noise2(double x, double y);
+    public native double[] noise2(long seed, int width, int height);
 
     /**
      * 2D Simplex noise, with Y pointing down the main diagonal.
      * Might be better for a 2D sandbox style game, where Y is vertical.
      * Probably slightly less optimal for heightmaps or continent maps.
      */
-    public native double noise2_XBeforeY(double x, double y);
+    public native double[] noise2XBeforeY(long seed, int width, int height);
 
     /**
      * 3D Re-oriented 4-point BCC noise, classic orientation.
      * Proper substitute for 3D Simplex in light of Forbidden Formulae.
      * Use noise3_XYBeforeZ or noise3_XZBeforeY instead, wherever appropriate.
      */
-    public native double noise3_Classic(double x, double y, double z);
+    public native double[] noise3Classic(long seed, int width, int height);
 
     /**
      * 3D Re-oriented 4-point BCC noise, with better visual isotropy in (X, Y).
@@ -42,7 +42,7 @@ public class OpenSimplex2F {
      * If Z is vertical in world coordinates, call noise3_XYBeforeZ(x, y, Z).
      * For a time varied animation, call noise3_XYBeforeZ(x, y, T).
      */
-    public native double noise3_XYBeforeZ(double x, double y, double z);
+    public native double[] noise3XYBeforeZ(long seed, int width, int height);
 
     /**
      * 3D Re-oriented 4-point BCC noise, with better visual isotropy in (X, Z).
@@ -52,30 +52,30 @@ public class OpenSimplex2F {
      * If Z is vertical in world coordinates, call noise3_XZBeforeY(x, Z, y) or use noise3_XYBeforeZ.
      * For a time varied animation, call noise3_XZBeforeY(x, T, y) or use noise3_XYBeforeZ.
      */
-    public native double noise3_XZBeforeY(double x, double y, double z);
+    public native double[] noise3XZBeforeY(long seed, int width, int height);
 
     /**
      * 4D OpenSimplex2F noise, classic lattice orientation.
      */
-    public native double noise4_Classic(double x, double y, double z, double w);
+    public native double[] noise4Classic(long seed, int width, int height);
 
     /**
      * 4D OpenSimplex2F noise, with XY and ZW forming orthogonal triangular-based planes.
      * Recommended for 3D terrain, where X and Y (or Z and W) are horizontal.
      * Recommended for noise(x, y, sin(time), cos(time)) trick.
      */
-    public native double noise4_XYBeforeZW(double x, double y, double z, double w);
+    public native double[] noise4XYBeforeZW(long seed, int width, int height);
 
     /**
      * 4D OpenSimplex2F noise, with XZ and YW forming orthogonal triangular-based planes.
      * Recommended for 3D terrain, where X and Z (or Y and W) are horizontal.
      */
-    public native double noise4_XZBeforeYW(double x, double y, double z, double w);
+    public native double[] noise4XZBeforeYW(long seed, int width, int height);
 
     /**
      * 4D OpenSimplex2F noise, with XYZ oriented like noise3_Classic,
      * and W for an extra degree of freedom. W repeats eventually.
      * Recommended for time-varied animations which texture a 3D object (W=time)
      */
-    public native double noise4_XYZBeforeW(double x, double y, double z, double w);
+    public native double[] noise4XYZBeforeW(long seed, int width, int height);
 }
