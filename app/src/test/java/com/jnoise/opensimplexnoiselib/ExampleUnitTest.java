@@ -1,4 +1,4 @@
-package com.jnoise.opensimplexnoise;
+package com.jnoise.opensimplexnoiselib;
 
 import org.junit.Test;
 

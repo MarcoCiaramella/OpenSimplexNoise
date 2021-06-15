@@ -1,3 +1,3 @@
-include ':opensimplexnoise'
+include ':opensimplexnoiselib'
 include ':app'
 rootProject.name = "OpenSimplexNoise"

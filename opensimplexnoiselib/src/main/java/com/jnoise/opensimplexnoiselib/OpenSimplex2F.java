@@ -1,4 +1,4 @@
-package com.jnoise.opensimplexnoise;
+package com.jnoise.opensimplexnoiselib;
 
 /**
  * K.jpg's OpenSimplex 2, faster variant
