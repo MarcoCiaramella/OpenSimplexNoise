@@ -12,12 +12,12 @@ cmake_minimum_required(VERSION 3.4.1)
 
 add_library(
     OpenSimplex2F
-    STATIC
+    SHARED
     src/main/cpp/OpenSimplex2F.c )
 
 add_library(
     OpenSimplex2S
-    STATIC
+    SHARED
     src/main/cpp/OpenSimplex2S.c )
 
 # Specifies a path to native header files.
