@@ -494,7 +494,7 @@ double _noise2_Base(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xs, d
 	 * 2D Simplex noise, standard lattice orientation.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise2(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -523,7 +523,7 @@ Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise2(JNIEnv* env, jobject this,
 	 * Probably slightly less optimal for heightmaps or continent maps.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise2XBeforeY(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2XBeforeY(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -591,7 +591,7 @@ double _noise3_BCC(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xr, do
 	 * Use noise3_XYBeforeZ or noise3_XZBeforeY instead, wherever appropriate.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise3Classic(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3Classic(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -628,7 +628,7 @@ Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise3Classic(JNIEnv* env, jobjec
 	 * For a time varied animation, call noise3_XYBeforeZ(x, y, T).
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -667,7 +667,7 @@ Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, jobj
 	 * For a time varied animation, call noise3_XZBeforeY(x, T, y) or use noise3_XYBeforeZ.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise3XZBeforeY(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XZBeforeY(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -857,7 +857,7 @@ double _noise4_Base(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xs, d
 	 * 4D OpenSimplex2F noise, classic lattice orientation.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4Classic(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4Classic(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -889,7 +889,7 @@ Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4Classic(JNIEnv* env, jobjec
 	 * Recommended for noise(x, y, sin(time), cos(time)) trick.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -920,7 +920,7 @@ Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, job
 	 * Recommended for 3D terrain, where X and Z (or Y and W) are horizontal.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -952,7 +952,7 @@ Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, job
 	 * Recommended for time-varied animations which texture a 3D object (W=time)
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoise_OpenSimplex2F_noise4XYZBeforeW(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYZBeforeW(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
