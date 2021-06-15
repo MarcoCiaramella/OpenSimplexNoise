@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jnoise.opensimplexnoiselib">
+    package="com.jnoise.opensimplexnoise">
 
     <application
         android:allowBackup="true"

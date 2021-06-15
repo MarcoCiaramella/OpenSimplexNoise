@@ -12,7 +12,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/opensimplexnoiselib" />
+            <option value="$PROJECT_DIR$/opensimplexnoise" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

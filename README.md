@@ -23,7 +23,7 @@ dependencies {
 
 ## How to use
 ```java
-import com.jnoise.opensimplexnoiselib.OpenSimplexNoise;
+import com.jnoise.opensimplexnoise.OpenSimplexNoise;
 
 public class Heightmap {
 

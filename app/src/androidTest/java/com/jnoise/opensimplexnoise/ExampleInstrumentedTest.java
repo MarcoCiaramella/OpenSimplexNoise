@@ -1,4 +1,4 @@
-package com.jnoise.opensimplexnoiselib;
+package com.jnoise.opensimplexnoise;
 
 import android.content.Context;
 
