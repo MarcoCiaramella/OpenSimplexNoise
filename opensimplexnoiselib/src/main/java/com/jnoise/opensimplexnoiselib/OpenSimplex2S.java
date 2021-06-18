@@ -22,14 +22,14 @@ public class OpenSimplex2S {
     /**
      * 2D SuperSimplex noise, standard lattice orientation.
      */
-    public native double[] noise2(long seed, int width, int height);
+    public native double[] noise2(long seed, int width, int height, int offX, int offY, double freq);
 
     /**
      * 2D SuperSimplex noise, with Y pointing down the main diagonal.
      * Might be better for a 2D sandbox style game, where Y is vertical.
      * Probably slightly less optimal for heightmaps or continent maps.
      */
-    public native double[] noise2XBeforeY(long seed, int width, int height);
+    public native double[] noise2XBeforeY(long seed, int width, int height, int offX, int offY, double freq);
 
     /**
      * 3D Re-oriented 8-point BCC noise, classic orientation
@@ -37,7 +37,7 @@ public class OpenSimplex2S {
      * in light of Forbidden Formulae.
      * Use noise3_XYBeforeZ or noise3_XZBeforeY instead, wherever appropriate.
      */
-    public native double[] noise3Classic(long seed, int width, int height);
+    public native double[] noise3Classic(long seed, int width, int height, int offX, int offY, double freq);
 
     /**
      * 3D Re-oriented 8-point BCC noise, with better visual isotropy in (X, Y).
@@ -47,7 +47,7 @@ public class OpenSimplex2S {
      * If Z is vertical in world coordinates, call noise3_XYBeforeZ(x, y, Z).
      * For a time varied animation, call noise3_XYBeforeZ(x, y, T).
      */
-    public native double[] noise3XYBeforeZ(long seed, int width, int height);
+    public native double[] noise3XYBeforeZ(long seed, int width, int height, int offX, int offY, double freq);
 
     /**
      * 3D Re-oriented 8-point BCC noise, with better visual isotropy in (X, Z).
@@ -57,30 +57,30 @@ public class OpenSimplex2S {
      * If Z is vertical in world coordinates, call noise3_XZBeforeY(x, Z, y) or use noise3_XYBeforeZ.
      * For a time varied animation, call noise3_XZBeforeY(x, T, y) or use noise3_XYBeforeZ.
      */
-    public native double[] noise3XZBeforeY(long seed, int width, int height);
+    public native double[] noise3XZBeforeY(long seed, int width, int height, int offX, int offY, double freq);
 
     /**
      * 4D SuperSimplex noise, classic lattice orientation.
      */
-    public native double[] noise4Classic(long seed, int width, int height);
+    public native double[] noise4Classic(long seed, int width, int height, int offX, int offY, double freq);
 
     /**
      * 4D SuperSimplex noise, with XY and ZW forming orthogonal triangular-based planes.
      * Recommended for 3D terrain, where X and Y (or Z and W) are horizontal.
      * Recommended for noise(x, y, sin(time), cos(time)) trick.
      */
-    public native double[] noise4XYBeforeZW(long seed, int width, int height);
+    public native double[] noise4XYBeforeZW(long seed, int width, int height, int offX, int offY, double freq);
 
     /**
      * 4D SuperSimplex noise, with XZ and YW forming orthogonal triangular-based planes.
      * Recommended for 3D terrain, where X and Z (or Y and W) are horizontal.
      */
-    public native double[] noise4XZBeforeYW(long seed, int width, int height);
+    public native double[] noise4XZBeforeYW(long seed, int width, int height, int offX, int offY, double freq);
 
     /**
      * 4D SuperSimplex noise, with XYZ oriented like noise3_Classic,
      * and W for an extra degree of freedom.
      * Recommended for time-varied animations which texture a 3D object (W=time)
      */
-    public native double[] noise4XYZBeforeW(long seed, int width, int height);
+    public native double[] noise4XYZBeforeW(long seed, int width, int height, int offX, int offY, double freq);
 }

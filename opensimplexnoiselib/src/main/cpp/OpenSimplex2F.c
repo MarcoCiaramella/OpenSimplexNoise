@@ -449,6 +449,42 @@ LatticePoint4D **_newLatticePoint4DConstArray(){
 	return plp4DArr;
 }
 
+OpenSimplexEnv *initOpenSimplex(){
+	OpenSimplexEnv *ose = (OpenSimplexEnv *) malloc(sizeof(OpenSimplexEnv));
+	ose->GRADIENTS_2D = _newGrad2ConstArray();
+	ose->GRADIENTS_3D = _newGrad3ConstArray();
+	ose->GRADIENTS_4D = _newGrad4ConstArray();
+	ose->LOOKUP_2D = _newLatticePoint2DConstArray();
+	ose->LOOKUP_3D = _newLatticePoint3DConstArray();
+	ose->VERTICES_4D = _newLatticePoint4DConstArray();
+	return ose;
+}
+
+OpenSimplexGradients *newOpenSimplexGradients(OpenSimplexEnv *ose, long seed){
+	OpenSimplexGradients *osg = (OpenSimplexGradients *) malloc(sizeof(OpenSimplexGradients));
+	osg->perm = _newShortArr(PSIZE);
+	osg->permGrad2 = _newGrad2Arr(PSIZE);
+	osg->permGrad3 = _newGrad3Arr(PSIZE);
+	osg->permGrad4 = _newGrad4Arr(PSIZE);
+	short *source = _newShortArr(PSIZE);
+	for (short i = 0; i < PSIZE; i++){
+		source[i] = i;
+	}
+	for (int i = PSIZE - 1; i >= 0; i--){
+		seed = seed * 6364136223846793005L + 1442695040888963407L;
+		int r = (int)((seed + 31) % (i + 1));
+		if (r < 0){
+			r += (i + 1);
+		}
+		osg->perm[i] = source[r];
+		osg->permGrad2[i] = ose->GRADIENTS_2D[osg->perm[i]];
+		osg->permGrad3[i] = ose->GRADIENTS_3D[osg->perm[i]];
+		osg->permGrad4[i] = ose->GRADIENTS_4D[osg->perm[i]];
+		source[r] = source[i];
+	}
+	return osg;
+}
+
 /*
 	 * Noise Evaluators
 	 */
@@ -494,7 +530,7 @@ double _noise2_Base(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xs, d
 	 * 2D Simplex noise, standard lattice orientation.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject this, jlong seed, jint width, jint height, jint off_x, jint off_y, jdouble freq){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -502,9 +538,12 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject th
 	double* noise = (double*) malloc(sizeof(double) * size);
 	for (int y = 0; y < height; y++){
 		for (int x = 0; x < width; x++){
+            double xd = (x + off_x) * freq;
+            double yd = (y + off_y) * freq;
+
 			// Get points for A2* lattice
-			double s = 0.366025403784439 * (x + y);
-			double xs = x + s, ys = y + s;
+			double s = 0.366025403784439 * (xd + yd);
+			double xs = xd + s, ys = yd + s;
 			noise[width * y + x] = _noise2_Base(ose, osg, xs, ys);
 		}
 	}
@@ -523,7 +562,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject th
 	 * Probably slightly less optimal for heightmaps or continent maps.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2XBeforeY(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2XBeforeY(JNIEnv* env, jobject this, jlong seed, jint width, jint height, jint off_x, jint off_y, jdouble freq){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -531,9 +570,12 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2XBeforeY(JNIEnv* env, jo
 	double* noise = (double*) malloc(sizeof(double) * size);
 	for (int y = 0; y < height; y++){
 		for (int x = 0; x < width; x++){
+            double xd = (x + off_x) * freq;
+            double yd = (y + off_y) * freq;
+
 			// Skew transform and rotation baked into one.
-			double xx = x * 0.7071067811865476;
-			double yy = y * 1.224744871380249;
+			double xx = xd * 0.7071067811865476;
+			double yy = yd * 1.224744871380249;
 			noise[width * y + x] = _noise2_Base(ose, osg, yy + xx, yy - xx);
 		}
 	}
@@ -591,7 +633,7 @@ double _noise3_BCC(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xr, do
 	 * Use noise3_XYBeforeZ or noise3_XZBeforeY instead, wherever appropriate.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3Classic(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3Classic(JNIEnv* env, jobject this, jlong seed, jint width, jint height, jint off_x, jint off_y, jdouble freq){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -599,12 +641,15 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3Classic(JNIEnv* env, job
 	double* noise = (double*) malloc(sizeof(double) * size);
 	for (int y = 0; y < height; y++){
 		for (int x = 0; x < width; x++){
-			int z = 0;
+            double xd = (x + off_x) * freq;
+            double yd = 0.0;
+            double zd = (y + off_y) * freq;
+
 			// Re-orient the cubic lattices via rotation, to produce the expected look on cardinal planar slices.
 			// If texturing objects that don't tend to have cardinal plane faces, you could even remove this.
 			// Orthonormal rotation. Not a skew transform.
-			double r = (2.0 / 3.0) * (x + y + z);
-			double xr = r - x, yr = r - y, zr = r - z;
+			double r = (2.0 / 3.0) * (xd + yd + zd);
+			double xr = r - xd, yr = r - yd, zr = r - zd;
 
 			// Evaluate both lattices to form a BCC lattice.
 			noise[width * y + x] = _noise3_BCC(ose, osg, xr, yr, zr);
@@ -628,7 +673,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3Classic(JNIEnv* env, job
 	 * For a time varied animation, call noise3_XYBeforeZ(x, y, T).
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, jobject this, jlong seed, jint width, jint height, jint off_x, jint off_y, jdouble freq){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -636,13 +681,16 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, j
 	double* noise = (double*) malloc(sizeof(double) * size);
 	for (int y = 0; y < height; y++){
 		for (int x = 0; x < width; x++){
-			int z = 0;
+            double xd = (x + off_x) * freq;
+            double yd = 0.0;
+            double zd = (y + off_y) * freq;
+
 			// Re-orient the cubic lattices without skewing, to make X and Y triangular like 2D.
 			// Orthonormal rotation. Not a skew transform.
-			double xy = x + y;
+			double xy = xd + yd;
 			double s2 = xy * -0.211324865405187;
-			double zz = z * 0.577350269189626;
-			double xr = x + s2 - zz, yr = y + s2 - zz;
+			double zz = zd * 0.577350269189626;
+			double xr = xd + s2 - zz, yr = yd + s2 - zz;
 			double zr = xy * 0.577350269189626 + zz;
 
 			// Evaluate both lattices to form a BCC lattice.
@@ -667,7 +715,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, j
 	 * For a time varied animation, call noise3_XZBeforeY(x, T, y) or use noise3_XYBeforeZ.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XZBeforeY(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XZBeforeY(JNIEnv* env, jobject this, jlong seed, jint width, jint height, jint off_x, jint off_y, jdouble freq){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -675,14 +723,17 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XZBeforeY(JNIEnv* env, j
 	double* noise = (double*) malloc(sizeof(double) * size);
 	for (int y = 0; y < height; y++){
 		for (int x = 0; x < width; x++){
-			int z = 0;
+            double xd = (x + off_x) * freq;
+            double yd = 0.0;
+            double zd = (y + off_y) * freq;
+
 			// Re-orient the cubic lattices without skewing, to make X and Z triangular like 2D.
 			// Orthonormal rotation. Not a skew transform.
-			double xz = x + z;
+			double xz = xd + zd;
 			double s2 = xz * -0.211324865405187;
-			double yy = y * 0.577350269189626;
-			double xr = x + s2 - yy;
-			double zr = z + s2 - yy;
+			double yy = yd * 0.577350269189626;
+			double xr = xd + s2 - yy;
+			double zr = zd + s2 - yy;
 			double yr = xz * 0.577350269189626 + yy;
 
 			// Evaluate both lattices to form a BCC lattice.
@@ -857,7 +908,7 @@ double _noise4_Base(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xs, d
 	 * 4D OpenSimplex2F noise, classic lattice orientation.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4Classic(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4Classic(JNIEnv* env, jobject this, jlong seed, jint width, jint height, jint off_x, jint off_y, jdouble freq){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -865,11 +916,14 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4Classic(JNIEnv* env, job
 	double* noise = (double*) malloc(sizeof(double) * size);
 	for (int y = 0; y < height; y++){
 		for (int x = 0; x < width; x++){
-			int z = 0;
-			int w = 0;
+            double xd = (x + off_x) * freq;
+            double yd = 0.0;
+            double zd = (y + off_y) * freq;
+            double wd = 0.0;
+
 			// Get points for A4 lattice
-			double s = -0.138196601125011 * (x + y + z + w);
-			double xs = x + s, ys = y + s, zs = z + s, ws = w + s;
+			double s = -0.138196601125011 * (xd + yd + zd + wd);
+			double xs = xd + s, ys = yd + s, zs = zd + s, ws = wd + s;
 
 			noise[width * y + x] = _noise4_Base(ose, osg, xs, ys, zs, ws);
 		}
@@ -889,7 +943,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4Classic(JNIEnv* env, job
 	 * Recommended for noise(x, y, sin(time), cos(time)) trick.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, jobject this, jlong seed, jint width, jint height, jint off_x, jint off_y, jdouble freq){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -897,11 +951,14 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, 
 	double* noise = (double*) malloc(sizeof(double) * size);
 	for (int y = 0; y < height; y++){
 		for (int x = 0; x < width; x++){
-			int z = 0;
-			int w = 0;
-			double s2 = (x + y) * -0.178275657951399372 + (z + w) * 0.215623393288842828;
-			double t2 = (z + w) * -0.403949762580207112 + (x + y) * -0.375199083010075342;
-			double xs = x + s2, ys = y + s2, zs = z + t2, ws = w + t2;
+            double xd = (x + off_x) * freq;
+            double yd = 0.0;
+            double zd = (y + off_y) * freq;
+            double wd = 0.0;
+
+			double s2 = (xd + yd) * -0.178275657951399372 + (zd + wd) * 0.215623393288842828;
+			double t2 = (zd + wd) * -0.403949762580207112 + (xd + yd) * -0.375199083010075342;
+			double xs = xd + s2, ys = yd + s2, zs = zd + t2, ws = wd + t2;
 
 			noise[width * y + x] = _noise4_Base(ose, osg, xs, ys, zs, ws);
 		}
@@ -920,7 +977,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, 
 	 * Recommended for 3D terrain, where X and Z (or Y and W) are horizontal.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, jobject this, jlong seed, jint width, jint height, jint off_x, jint off_y, jdouble freq){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -928,11 +985,14 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, 
 	double* noise = (double*) malloc(sizeof(double) * size);
 	for (int y = 0; y < height; y++){
 		for (int x = 0; x < width; x++){
-			int z = 0;
-			int w = 0;
-			double s2 = (x + z) * -0.178275657951399372 + (y + w) * 0.215623393288842828;
-			double t2 = (y + w) * -0.403949762580207112 + (x + z) * -0.375199083010075342;
-			double xs = x + s2, ys = y + t2, zs = z + s2, ws = w + t2;
+            double xd = (x + off_x) * freq;
+            double yd = 0.0;
+            double zd = (y + off_y) * freq;
+            double wd = 0.0;
+
+			double s2 = (xd + zd) * -0.178275657951399372 + (yd + wd) * 0.215623393288842828;
+			double t2 = (yd + wd) * -0.403949762580207112 + (xd + zd) * -0.375199083010075342;
+			double xs = xd + s2, ys = yd + t2, zs = zd + s2, ws = wd + t2;
 
 			noise[width * y + x] = _noise4_Base(ose, osg, xs, ys, zs, ws);
 		}
@@ -952,7 +1012,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, 
 	 * Recommended for time-varied animations which texture a 3D object (W=time)
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYZBeforeW(JNIEnv* env, jobject this, jlong seed, jint width, jint height){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYZBeforeW(JNIEnv* env, jobject this, jlong seed, jint width, jint height, jint off_x, jint off_y, jdouble freq){
 
 	jint size = width * height;
 	OpenSimplexEnv *ose = initOpenSimplex();
@@ -960,12 +1020,15 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYZBeforeW(JNIEnv* env, 
 	double* noise = (double*) malloc(sizeof(double) * size);
 	for (int y = 0; y < height; y++){
 		for (int x = 0; x < width; x++){
-			int z = 0;
-			int w = 0;
-			double xyz = x + y + z;
-			double ww = w * 0.2236067977499788;
+            double xd = (x + off_x) * freq;
+            double yd = 0.0;
+            double zd = (y + off_y) * freq;
+            double wd = 0.0;
+
+			double xyz = xd + yd + zd;
+			double ww = wd * 0.2236067977499788;
 			double s2 = xyz * -0.16666666666666666 + ww;
-			double xs = x + s2, ys = y + s2, zs = z + s2, ws = -0.5 * xyz + ww;
+			double xs = xd + s2, ys = yd + s2, zs = zd + s2, ws = -0.5 * xyz + ww;
 
 			noise[width * y + x] = _noise4_Base(ose, osg, xs, ys, zs, ws);
 		}
@@ -977,40 +1040,4 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYZBeforeW(JNIEnv* env, 
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
 	return result;
-}
-
-OpenSimplexEnv *initOpenSimplex(){
-	OpenSimplexEnv *ose = (OpenSimplexEnv *) malloc(sizeof(OpenSimplexEnv));
-	ose->GRADIENTS_2D = _newGrad2ConstArray();
-	ose->GRADIENTS_3D = _newGrad3ConstArray();
-	ose->GRADIENTS_4D = _newGrad4ConstArray();
-	ose->LOOKUP_2D = _newLatticePoint2DConstArray();
-	ose->LOOKUP_3D = _newLatticePoint3DConstArray();
-	ose->VERTICES_4D = _newLatticePoint4DConstArray();
-	return ose;
-}
-
-OpenSimplexGradients *newOpenSimplexGradients(OpenSimplexEnv *ose, long seed){
-    OpenSimplexGradients *osg = (OpenSimplexGradients *) malloc(sizeof(OpenSimplexGradients));
-    osg->perm = _newShortArr(PSIZE);
-    osg->permGrad2 = _newGrad2Arr(PSIZE);
-    osg->permGrad3 = _newGrad3Arr(PSIZE);
-    osg->permGrad4 = _newGrad4Arr(PSIZE);
-    short *source = _newShortArr(PSIZE);
-    for (short i = 0; i < PSIZE; i++){
-        source[i] = i;
-    }
-    for (int i = PSIZE - 1; i >= 0; i--){
-        seed = seed * 6364136223846793005L + 1442695040888963407L;
-		int r = (int)((seed + 31) % (i + 1));
-		if (r < 0){
-            r += (i + 1);
-        }
-		osg->perm[i] = source[r];
-		osg->permGrad2[i] = ose->GRADIENTS_2D[osg->perm[i]];
-		osg->permGrad3[i] = ose->GRADIENTS_3D[osg->perm[i]];
-		osg->permGrad4[i] = ose->GRADIENTS_4D[osg->perm[i]];
-		source[r] = source[i];
-    }
-	return osg;
 }

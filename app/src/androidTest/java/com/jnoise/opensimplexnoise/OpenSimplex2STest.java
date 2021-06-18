@@ -31,7 +31,7 @@ public class OpenSimplex2STest {
     @Test
     public void noise2_isCorrect(){
         OpenSimplex2S openSimplex2S = new OpenSimplex2S();
-        double[] noise = openSimplex2S.noise2(1234, 512, 512);
+        double[] noise = openSimplex2S.noise2(1234, 512, 512, 0, 0, 0.1);
         assertNotNull(noise);
     }
 }
