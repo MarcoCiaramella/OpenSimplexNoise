@@ -30,8 +30,8 @@ public class OpenSimplex2FTest {
 
     @Test
     public void noise2_isCorrect(){
-        OpenSimplex2F openSimplex2F = new OpenSimplex2F();
-        double[] noise = openSimplex2F.noise2(1234, 512, 512, 0, 0, 0.1);
+        OpenSimplex2F openSimplex2F = new OpenSimplex2F(1234);
+        double[] noise = openSimplex2F.noise2(512, 512, 0, 0, 0.1);
         assertNotNull(noise);
     }
 }
