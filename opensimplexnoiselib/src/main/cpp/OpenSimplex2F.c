@@ -449,7 +449,7 @@ LatticePoint4D **_newLatticePoint4DConstArray(){
 	return plp4DArr;
 }
 
-OpenSimplexEnv *initOpenSimplex(){
+OpenSimplexEnv* initOpenSimplex(){
 	OpenSimplexEnv *ose = (OpenSimplexEnv *) malloc(sizeof(OpenSimplexEnv));
 	ose->GRADIENTS_2D = _newGrad2ConstArray();
 	ose->GRADIENTS_3D = _newGrad3ConstArray();
@@ -460,7 +460,7 @@ OpenSimplexEnv *initOpenSimplex(){
 	return ose;
 }
 
-OpenSimplexGradients *newOpenSimplexGradients(OpenSimplexEnv *ose, long seed){
+OpenSimplexGradients* newOpenSimplexGradients(OpenSimplexEnv *ose, long seed){
 	OpenSimplexGradients *osg = (OpenSimplexGradients *) malloc(sizeof(OpenSimplexGradients));
 	osg->perm = _newShortArr(PSIZE);
 	osg->permGrad2 = _newGrad2Arr(PSIZE);
@@ -547,12 +547,12 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject th
 			noise[width * y + x] = _noise2_Base(ose, osg, xs, ys);
 		}
 	}
-	free(noise);
 	jdoubleArray result = (*env)->NewDoubleArray(env, size);
     if (result == NULL) {
         return NULL;
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+	free(noise);
 	return result;
 }
 
@@ -579,12 +579,12 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2XBeforeY(JNIEnv* env, jo
 			noise[width * y + x] = _noise2_Base(ose, osg, yy + xx, yy - xx);
 		}
 	}
-	free(noise);
 	jdoubleArray result = (*env)->NewDoubleArray(env, size);
     if (result == NULL) {
         return NULL;
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+	free(noise);
 	return result;
 }
 
@@ -655,12 +655,12 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3Classic(JNIEnv* env, job
 			noise[width * y + x] = _noise3_BCC(ose, osg, xr, yr, zr);
 		}
 	}
-	free(noise);
 	jdoubleArray result = (*env)->NewDoubleArray(env, size);
     if (result == NULL) {
         return NULL;
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+	free(noise);
 	return result;
 }
 
@@ -697,12 +697,12 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, j
 			noise[width * y + x] = _noise3_BCC(ose, osg, xr, yr, zr);
 		}
 	}
-	free(noise);
 	jdoubleArray result = (*env)->NewDoubleArray(env, size);
     if (result == NULL) {
         return NULL;
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+	free(noise);
 	return result;
 }
 
@@ -740,12 +740,12 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XZBeforeY(JNIEnv* env, j
 			noise[width * y + x] = _noise3_BCC(ose, osg, xr, yr, zr);
 		}
 	}
-	free(noise);
 	jdoubleArray result = (*env)->NewDoubleArray(env, size);
     if (result == NULL) {
         return NULL;
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+	free(noise);
 	return result;
 }
 
@@ -928,12 +928,12 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4Classic(JNIEnv* env, job
 			noise[width * y + x] = _noise4_Base(ose, osg, xs, ys, zs, ws);
 		}
 	}
-	free(noise);
 	jdoubleArray result = (*env)->NewDoubleArray(env, size);
     if (result == NULL) {
         return NULL;
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+	free(noise);
 	return result;
 }
 
@@ -963,12 +963,12 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, 
 			noise[width * y + x] = _noise4_Base(ose, osg, xs, ys, zs, ws);
 		}
 	}
-	free(noise);
 	jdoubleArray result = (*env)->NewDoubleArray(env, size);
     if (result == NULL) {
         return NULL;
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+	free(noise);
 	return result;
 }
 
@@ -997,12 +997,12 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, 
 			noise[width * y + x] = _noise4_Base(ose, osg, xs, ys, zs, ws);
 		}
 	}
-	free(noise);
 	jdoubleArray result = (*env)->NewDoubleArray(env, size);
     if (result == NULL) {
         return NULL;
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+	free(noise);
 	return result;
 }
 
@@ -1033,11 +1033,11 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYZBeforeW(JNIEnv* env, 
 			noise[width * y + x] = _noise4_Base(ose, osg, xs, ys, zs, ws);
 		}
 	}
-	free(noise);
 	jdoubleArray result = (*env)->NewDoubleArray(env, size);
     if (result == NULL) {
         return NULL;
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+	free(noise);
 	return result;
 }
