@@ -2,7 +2,6 @@ package com.jnoise.opensimplexnoise;
 
 import android.content.Context;
 import android.os.Debug;
-import android.util.Log;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -46,7 +45,6 @@ public class OpenSimplex2FTest {
 
     @Test
     public void noise2_isCorrect(){
-        Log.i("##",InstrumentationRegistry.getInstrumentation().getTargetContext().getExternalFilesDir(null).getAbsolutePath());
         startMethodTracing("noise2_isCorrect");
         OpenSimplex2F openSimplex2F = new OpenSimplex2F(1234);
         for (int i = 0; i < 10; i++) {
