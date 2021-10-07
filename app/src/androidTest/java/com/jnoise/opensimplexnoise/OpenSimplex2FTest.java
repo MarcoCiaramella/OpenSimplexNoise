@@ -43,18 +43,28 @@ public class OpenSimplex2FTest {
         Debug.stopMethodTracing();
     }
 
-    private double[] points(int width, int height){
-
+    private double[] points(int width, int height, int offX, int offY, double freq){
+        double[] points = new double[width*height*2];
+        int i = 0;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                double xd = (x + offX) * freq;
+                double yd = (y + offY) * freq;
+                points[i++] = xd;
+                points[i++] = yd;
+            }
+        }
+        return points;
     }
 
     @Test
     public void noise2_isCorrect(){
+        double[] points = points(512, 512, 0, 0, 0.1);
+
         startMethodTracing("noise2_isCorrect");
         OpenSimplex2F openSimplex2F = new OpenSimplex2F(1234);
-        for (int i = 0; i < 10; i++) {
-            double[] noise = openSimplex2F.noise2(512, 512, 0, 0, 0.1);
-            assertNotNull(noise);
-        }
+        double[] noise = openSimplex2F.noise2(points, points.length/2, 0, 0, 0.1);
+        assertNotNull(noise);
         stopMethodTracing();
     }
 }
