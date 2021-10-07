@@ -535,31 +535,43 @@ double _noise2_Base(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xs, d
 	return value;
 }
 
+int check_points_size(jint size, jint num_points, int dim_point){
+	return (size / dim_point) == num_points;
+}
+
 /**
 	 * 2D Simplex noise, standard lattice orientation.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject this, jint width, jint height, jint off_x, jint off_y, jdouble freq){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject this, jdoubleArray points, jint num_points, jint off_x, jint off_y, jdouble freq){
 
-	jint size = width * height;
-	double* noise = (double*) malloc(sizeof(double) * size);
-	for (int y = 0; y < height; y++){
-		for (int x = 0; x < width; x++){
-            double xd = (x + off_x) * freq;
-            double yd = (y + off_y) * freq;
+	jsize size = (*env)->GetArrayLength(env, points);
+	jdouble* body = (*env)->GetDoubleArrayElements(env, points, 0);
 
-			// Get points for A2* lattice
-			double s = 0.366025403784439 * (xd + yd);
-			double xs = xd + s, ys = yd + s;
-			noise[width * y + x] = _noise2_Base(ose, osg, xs, ys);
-		}
+	if (!check_points_size(size, num_points, 2)){
+		return NULL;
+	}
+
+	double* noise = (double*) malloc(sizeof(double) * num_points);
+	for (int i = 0; i < num_points; i++){
+
+		double xd = body[i*2];
+		double yd = body[i*2 + 1];
+
+		// Get points for A2* lattice
+		double s = 0.366025403784439 * (xd + yd);
+		double xs = xd + s, ys = yd + s;
+		noise[i] = _noise2_Base(ose, osg, xs, ys);
 	}
 	jdoubleArray result = (*env)->NewDoubleArray(env, size);
     if (result == NULL) {
         return NULL;
     }
 	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+
+	(*env)->ReleaseDoubleArrayElements(env, points, body, 0);
 	free(noise);
+
 	return result;
 }
 

@@ -43,6 +43,10 @@ public class OpenSimplex2FTest {
         Debug.stopMethodTracing();
     }
 
+    private double[] points(int width, int height){
+
+    }
+
     @Test
     public void noise2_isCorrect(){
         startMethodTracing("noise2_isCorrect");

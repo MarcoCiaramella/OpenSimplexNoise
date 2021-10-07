@@ -24,7 +24,7 @@ public class OpenSimplex2F {
 
     public native void init(long seed);
 
-    public native double[] noise2(int width, int height, int offX, int offY, double freq);
+    public native double[] noise2(double[] points, int numPoints, int offX, int offY, double freq);
 
     /**
      * 2D Simplex noise, with Y pointing down the main diagonal.
