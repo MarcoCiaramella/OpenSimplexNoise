@@ -5,6 +5,8 @@
 #include <jni.h>
 #include "OpenSimplex2F.h"
 #include "log.h"
+#include "utils.h"
+
 
 
 #define PSIZE 2048
@@ -534,13 +536,6 @@ double _noise2_Base(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xs, d
 	}
 
 	return value;
-}
-
-int check_points_size(jint size, jint num_points, int dim_point){
-	if ((size / dim_point) != num_points) {
-		LOGE("Wrong points size");
-		exit(0);
-	}
 }
 
 /**

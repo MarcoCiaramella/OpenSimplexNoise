@@ -11,24 +11,30 @@ cmake_minimum_required(VERSION 3.4.1)
 # automatically packages shared libraries with your APK.
 
 add_library(
-    OpenSimplex2F
-    SHARED
-    src/main/cpp/OpenSimplex2F.c )
+        OpenSimplex2F
+        SHARED
+        src/main/cpp/utils.c
+        src/main/cpp/OpenSimplex2F.c
+)
 
 target_link_libraries(
         OpenSimplex2F
         android
-        log)
+        log
+)
 
 add_library(
-    OpenSimplex2S
-    SHARED
-    src/main/cpp/OpenSimplex2S.c )
+        OpenSimplex2S
+        SHARED
+        src/main/cpp/utils.c
+        src/main/cpp/OpenSimplex2S.c
+)
 
 target_link_libraries(
         OpenSimplex2S
         android
-        log)
+        log
+)
 
 # Specifies a path to native header files.
 include_directories(src/main/cpp/include/)
