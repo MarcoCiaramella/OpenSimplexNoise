@@ -547,7 +547,7 @@ int check_points_size(jint size, jint num_points, int dim_point){
 	 * 2D Simplex noise, standard lattice orientation.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject this, jdoubleArray points, jint num_points, jint off_x, jint off_y, jdouble freq){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
 	check_points_size(size, num_points, 2);
@@ -582,7 +582,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject th
 	 * Probably slightly less optimal for heightmaps or continent maps.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2XBeforeY(JNIEnv* env, jobject this, jdoubleArray points, jint num_points, jint off_x, jint off_y, jdouble freq){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2XBeforeY(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
 	check_points_size(size, num_points, 2);
@@ -656,7 +656,7 @@ double _noise3_BCC(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xr, do
 	 * Use noise3_XYBeforeZ or noise3_XZBeforeY instead, wherever appropriate.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3Classic(JNIEnv* env, jobject this, jdoubleArray points, jint num_points, jint off_x, jint off_y, jdouble freq){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3Classic(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
 	check_points_size(size, num_points, 3);
@@ -699,7 +699,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3Classic(JNIEnv* env, job
 	 * For a time varied animation, call noise3_XYBeforeZ(x, y, T).
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, jobject this, jdoubleArray points, jint num_points, jint off_x, jint off_y, jdouble freq){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
 	check_points_size(size, num_points, 3);
@@ -744,7 +744,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, j
 	 * For a time varied animation, call noise3_XZBeforeY(x, T, y) or use noise3_XYBeforeZ.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XZBeforeY(JNIEnv* env, jobject this, jdoubleArray points, jint num_points, jint off_x, jint off_y, jdouble freq){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XZBeforeY(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
 	check_points_size(size, num_points, 3);
@@ -940,7 +940,7 @@ double _noise4_Base(OpenSimplexEnv *ose, OpenSimplexGradients *osg, double xs, d
 	 * 4D OpenSimplex2F noise, classic lattice orientation.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4Classic(JNIEnv* env, jobject this, jdoubleArray points, jint num_points, jint off_x, jint off_y, jdouble freq){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4Classic(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
 	check_points_size(size, num_points, 4);
@@ -978,7 +978,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4Classic(JNIEnv* env, job
 	 * Recommended for noise(x, y, sin(time), cos(time)) trick.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, jobject this, jdoubleArray points, jint num_points, jint off_x, jint off_y, jdouble freq){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
 	check_points_size(size, num_points, 4);
@@ -1015,7 +1015,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, 
 	 * Recommended for 3D terrain, where X and Z (or Y and W) are horizontal.
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, jobject this, jdoubleArray points, jint num_points, jint off_x, jint off_y, jdouble freq){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
 	check_points_size(size, num_points, 4);
@@ -1053,7 +1053,7 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, 
 	 * Recommended for time-varied animations which texture a 3D object (W=time)
 	 */
 JNIEXPORT jdoubleArray JNICALL
-Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYZBeforeW(JNIEnv* env, jobject this, jdoubleArray points, jint num_points, jint off_x, jint off_y, jdouble freq){
+Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYZBeforeW(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
 	check_points_size(size, num_points, 4);
