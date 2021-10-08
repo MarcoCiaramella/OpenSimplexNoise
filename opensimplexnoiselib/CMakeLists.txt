@@ -15,10 +15,20 @@ add_library(
     SHARED
     src/main/cpp/OpenSimplex2F.c )
 
+target_link_libraries(
+        OpenSimplex2F
+        android
+        log)
+
 add_library(
     OpenSimplex2S
     SHARED
     src/main/cpp/OpenSimplex2S.c )
+
+target_link_libraries(
+        OpenSimplex2S
+        android
+        log)
 
 # Specifies a path to native header files.
 include_directories(src/main/cpp/include/)

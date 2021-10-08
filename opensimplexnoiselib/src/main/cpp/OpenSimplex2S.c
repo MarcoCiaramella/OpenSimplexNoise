@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <jni.h>
 #include "OpenSimplex2S.h"
+#include "log.h"
 
 
 

@@ -4,6 +4,7 @@
 #include <string.h>
 #include <jni.h>
 #include "OpenSimplex2F.h"
+#include "log.h"
 
 
 #define PSIZE 2048
@@ -563,11 +564,11 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise2(JNIEnv* env, jobject th
 		double xs = xd + s, ys = yd + s;
 		noise[i] = _noise2_Base(ose, osg, xs, ys);
 	}
-	jdoubleArray result = (*env)->NewDoubleArray(env, size);
+	jdoubleArray result = (*env)->NewDoubleArray(env, num_points);
     if (result == NULL) {
         return NULL;
     }
-	(*env)->SetDoubleArrayRegion(env, result, 0, size, noise);
+	(*env)->SetDoubleArrayRegion(env, result, 0, num_points, noise);
 
 	(*env)->ReleaseDoubleArrayElements(env, points, body, 0);
 	free(noise);

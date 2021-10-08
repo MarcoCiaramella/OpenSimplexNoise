@@ -2,6 +2,7 @@ package com.jnoise.opensimplexnoise;
 
 import android.content.Context;
 import android.os.Debug;
+import android.util.Log;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -66,5 +67,19 @@ public class OpenSimplex2FTest {
         double[] noise = openSimplex2F.noise2(points, points.length/2, 0, 0, 0.1);
         assertNotNull(noise);
         stopMethodTracing();
+    }
+
+    @Test
+    public void noise2_timing(){
+        double[] points = points(512, 512, 0, 0, 0.1);
+        OpenSimplex2F openSimplex2F = new OpenSimplex2F(1234);
+
+        long t0 = System.currentTimeMillis();
+        long numTests = 100;
+        for (int c = 0; c < numTests; c++) {
+            double[] noise = openSimplex2F.noise2(points, points.length / 2, 0, 0, 0.1);
+        }
+        long t1 = System.currentTimeMillis();
+        Log.i("TEST", "time: "+((t1-t0)/numTests)+"ms");
     }
 }
