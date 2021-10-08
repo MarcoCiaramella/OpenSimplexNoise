@@ -72,11 +72,11 @@ public class OpenSimplex2FTest {
     @Test
     public void noise2_timing(){
         double[] points = points(512, 512, 0, 0, 0.1);
-        OpenSimplex2F openSimplex2F = new OpenSimplex2F(1234);
 
         long t0 = System.currentTimeMillis();
         long numTests = 100;
         for (int c = 0; c < numTests; c++) {
+            OpenSimplex2F openSimplex2F = new OpenSimplex2F(c);
             double[] noise = openSimplex2F.noise2(points, points.length / 2, 0, 0, 0.1);
         }
         long t1 = System.currentTimeMillis();
