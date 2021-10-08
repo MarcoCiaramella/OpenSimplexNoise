@@ -82,4 +82,15 @@ public class OpenSimplex2FTest {
         long t1 = System.currentTimeMillis();
         Log.i("TEST", "time: "+((t1-t0)/numTests)+"ms");
     }
+
+    @Test
+    public void noise2XBeforeY_isCorrect(){
+        double[] points = points(512, 512, 0, 0, 0.1);
+
+        startMethodTracing("noise2XBeforeY_isCorrect");
+        OpenSimplex2F openSimplex2F = new OpenSimplex2F(1234);
+        double[] noise = openSimplex2F.noise2XBeforeY(points, points.length/2, 0, 0, 0.1);
+        assertNotNull(noise);
+        stopMethodTracing();
+    }
 }
