@@ -1,28 +1,5 @@
-# OpenSimplexNoise
-[![](https://jitpack.io/v/MarcoCiaramella/OpenSimplexNoise.svg)](https://jitpack.io/#MarcoCiaramella/OpenSimplexNoise)
+package com.jnoise.opensimplexnoise;
 
-The Android library of the [OpenSimplex 2](https://github.com/KdotJPG/OpenSimplex2)
-## How to import in your Android project
-Add JitPack in your root build.gradle at the end of repositories:
-
-```
-allprojects {
-  repositories {
-    ...
-    maven { url 'https://jitpack.io' }
-  }
-}
-```
-
-Add the dependency
-```
-dependencies {
-  implementation 'com.github.MarcoCiaramella:OpenSimplexNoise:1.0.0'
-}
-```
-
-## How to use
-```java
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
@@ -72,20 +49,3 @@ public class MainActivity extends AppCompatActivity {
         return openSimplex2F.noise2(grid, grid.length/2);
     }
 }
-```
-activity_main.xml
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter" />
-</FrameLayout>
-```
