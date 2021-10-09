@@ -10,7 +10,7 @@ repositories {
 }
 
 group = 'com.github.MarcoCiaramella'
-version = '1.0.6'
+version = '1.0.7'
 
 android {
     compileSdkVersion 30
@@ -58,7 +58,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.MarcoCiaramella'
                 artifactId = 'OpenSimplexNoise'
-                version = '1.0.6'
+                version = '1.0.7'
             }
         }
     }
