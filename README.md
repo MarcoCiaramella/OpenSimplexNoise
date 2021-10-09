@@ -1,7 +1,7 @@
 # OpenSimplexNoise
 [![](https://jitpack.io/v/MarcoCiaramella/OpenSimplexNoise.svg)](https://jitpack.io/#MarcoCiaramella/OpenSimplexNoise)
 
-The Android library from the gist https://gist.github.com/KdotJPG/b1270127455a94ac5d19
+The Android library of the [OpenSimplex 2](https://github.com/KdotJPG/OpenSimplex2)
 ## How to import in your Android project
 Add JitPack in your root build.gradle at the end of repositories:
 
@@ -23,30 +23,27 @@ dependencies {
 
 ## How to use
 ```java
-import com.jnoise.opensimplexnoise.OpenSimplexNoise;
-
 public class Heightmap {
 
-    private float[] vertices;
-    private int verticesIndex;
-
-    public Heightmap(int width, int height, int featureSize){
-        vertices = new float[width*height*3];
-        verticesIndex = 0;
-        OpenSimplexNoise noise = new OpenSimplexNoise();
+    private static double[] points(int width, int height, int offX, int offY, double freq){
+        double[] points = new double[width*height*2];
+        int i = 0;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double value01 = (noise.eval(x / (double)featureSize, y / (double)featureSize, 0.0)+1) / 2;
-                addVertex(x,y,value01);
-                addIndex(x,y);
+                double xd = (x + offX) * freq;
+                double yd = (y + offY) * freq;
+                points[i++] = xd;
+                points[i++] = yd;
             }
         }
+        return points;
     }
 
-    private void addVertex(int x, int y, double z01){
-        vertices[verticesIndex++] = x/(float)width;
-        vertices[verticesIndex++] = y/(float)height;
-        vertices[verticesIndex++] = (float)z01;
+    public static double[] create(int width, int height, int offX, int offY, double freq){
+        OpenSimplex2F openSimplex2F = new OpenSimplex2F(1234);
+        // create a width*height grid of points. Grid must be an array in the form of [x0,y0,x1,y1,....xn,yn]
+        double[] grid = points(width, height, offX, offY, freq);
+        return openSimplex2F.noise2(grid, grid.length/2);
     }
 }
 ```
