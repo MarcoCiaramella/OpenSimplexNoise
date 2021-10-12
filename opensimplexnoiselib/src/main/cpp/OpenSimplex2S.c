@@ -1656,7 +1656,7 @@ JNIEXPORT jdoubleArray JNICALL
 Java_com_jnoise_opensimplexnoiselib_OpenSimplex2S_noise2(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
-	check_points_size(size, num_points, 2);
+	check_points_size_2(size, num_points);
 	jdouble* body = (*env)->GetDoubleArrayElements(env, points, 0);
 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
@@ -1692,7 +1692,7 @@ JNIEXPORT jdoubleArray JNICALL
 Java_com_jnoise_opensimplexnoiselib_OpenSimplex2S_noise2XBeforeY(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
-	check_points_size(size, num_points, 2);
+	check_points_size_2(size, num_points);
 	jdouble* body = (*env)->GetDoubleArrayElements(env, points, 0);
 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
@@ -1768,7 +1768,7 @@ JNIEXPORT jdoubleArray JNICALL
 Java_com_jnoise_opensimplexnoiselib_OpenSimplex2S_noise3Classic(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
-	check_points_size(size, num_points, 3);
+	check_points_size_3(size, num_points);
 	jdouble* body = (*env)->GetDoubleArrayElements(env, points, 0);
 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
@@ -1811,7 +1811,7 @@ JNIEXPORT jdoubleArray JNICALL
 Java_com_jnoise_opensimplexnoiselib_OpenSimplex2S_noise3XYBeforeZ(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
-	check_points_size(size, num_points, 3);
+	check_points_size_3(size, num_points);
 	jdouble* body = (*env)->GetDoubleArrayElements(env, points, 0);
 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
@@ -1856,7 +1856,7 @@ JNIEXPORT jdoubleArray JNICALL
 Java_com_jnoise_opensimplexnoiselib_OpenSimplex2S_noise3XZBeforeY(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
-	check_points_size(size, num_points, 3);
+	check_points_size_3(size, num_points);
 	jdouble* body = (*env)->GetDoubleArrayElements(env, points, 0);
 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
@@ -1936,7 +1936,7 @@ JNIEXPORT jdoubleArray JNICALL
 Java_com_jnoise_opensimplexnoiselib_OpenSimplex2S_noise4Classic(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
-	check_points_size(size, num_points, 4);
+	check_points_size_4(size, num_points);
 	jdouble* body = (*env)->GetDoubleArrayElements(env, points, 0);
 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
@@ -1974,7 +1974,7 @@ JNIEXPORT jdoubleArray JNICALL
 Java_com_jnoise_opensimplexnoiselib_OpenSimplex2S_noise4XYBeforeZW(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
-	check_points_size(size, num_points, 4);
+	check_points_size_4(size, num_points);
 	jdouble* body = (*env)->GetDoubleArrayElements(env, points, 0);
 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
@@ -2011,7 +2011,7 @@ JNIEXPORT jdoubleArray JNICALL
 Java_com_jnoise_opensimplexnoiselib_OpenSimplex2S_noise4XZBeforeYW(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
-	check_points_size(size, num_points, 4);
+	check_points_size_4(size, num_points);
 	jdouble* body = (*env)->GetDoubleArrayElements(env, points, 0);
 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
@@ -2049,7 +2049,7 @@ JNIEXPORT jdoubleArray JNICALL
 Java_com_jnoise_opensimplexnoiselib_OpenSimplex2S_noise4XYZBeforeW(JNIEnv* env, jobject this, jdoubleArray points, jint num_points){
 
 	jsize size = (*env)->GetArrayLength(env, points);
-	check_points_size(size, num_points, 4);
+	check_points_size_4(size, num_points);
 	jdouble* body = (*env)->GetDoubleArrayElements(env, points, 0);
 
 	double* noise = (double*) malloc(sizeof(double) * num_points);

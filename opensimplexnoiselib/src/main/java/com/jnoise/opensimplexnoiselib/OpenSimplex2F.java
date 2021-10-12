@@ -22,66 +22,77 @@ public class OpenSimplex2F {
         init(seed);
     }
 
-    public native void init(long seed);
+    private native void init(long seed);
 
+    /**
+     * Calls native noise2 function.
+     * @param points must be in the form of [x0,y0,x1,y1,....xn,yn]
+     * @param numPoints number of input points
+     * @return array of noise values. One value for each (xi,yi) input point
+     */
     public native double[] noise2(double[] points, int numPoints);
 
     /**
-     * 2D Simplex noise, with Y pointing down the main diagonal.
-     * Might be better for a 2D sandbox style game, where Y is vertical.
-     * Probably slightly less optimal for heightmaps or continent maps.
+     * Calls native noise2XBeforeY function.
+     * @param points must be in the form of [x0,y0,x1,y1,....xn,yn]
+     * @param numPoints number of input points
+     * @return array of noise values. One value for each (xi,yi) input point
      */
     public native double[] noise2XBeforeY(double[] points, int numPoints);
 
     /**
-     * 3D Re-oriented 4-point BCC noise, classic orientation.
-     * Proper substitute for 3D Simplex in light of Forbidden Formulae.
-     * Use noise3_XYBeforeZ or noise3_XZBeforeY instead, wherever appropriate.
+     * Calls native noise3Classic function.
+     * @param points must be in the form of [x0,y0,z0,x1,y1,z1,....xn,yn,zn]
+     * @param numPoints number of input points
+     * @return array of noise values. One value for each (xi,yi,zi) input point
      */
     public native double[] noise3Classic(double[] points, int numPoints);
 
     /**
-     * 3D Re-oriented 4-point BCC noise, with better visual isotropy in (X, Y).
-     * Recommended for 3D terrain and time-varied animations.
-     * The Z coordinate should always be the "different" coordinate in your use case.
-     * If Y is vertical in world coordinates, call noise3_XYBeforeZ(x, z, Y) or use noise3_XZBeforeY.
-     * If Z is vertical in world coordinates, call noise3_XYBeforeZ(x, y, Z).
-     * For a time varied animation, call noise3_XYBeforeZ(x, y, T).
+     * Calls native noise3XYBeforeZ function.
+     * @param points must be in the form of [x0,y0,z0,x1,y1,z1,....xn,yn,zn]
+     * @param numPoints number of input points
+     * @return array of noise values. One value for each (xi,yi,zi) input point
      */
     public native double[] noise3XYBeforeZ(double[] points, int numPoints);
 
     /**
-     * 3D Re-oriented 4-point BCC noise, with better visual isotropy in (X, Z).
-     * Recommended for 3D terrain and time-varied animations.
-     * The Y coordinate should always be the "different" coordinate in your use case.
-     * If Y is vertical in world coordinates, call noise3_XZBeforeY(x, Y, z).
-     * If Z is vertical in world coordinates, call noise3_XZBeforeY(x, Z, y) or use noise3_XYBeforeZ.
-     * For a time varied animation, call noise3_XZBeforeY(x, T, y) or use noise3_XYBeforeZ.
+     * Calls native noise3XZBeforeY function.
+     * @param points must be in the form of [x0,y0,z0,x1,y1,z1,....xn,yn,zn]
+     * @param numPoints number of input points
+     * @return array of noise values. One value for each (xi,yi,zi) input point
      */
     public native double[] noise3XZBeforeY(double[] points, int numPoints);
 
     /**
-     * 4D OpenSimplex2F noise, classic lattice orientation.
+     * Calls native noise4Classic function.
+     * @param points must be in the form of [x0,y0,z0,w0,x1,y1,z1,w1,....xn,yn,zn,wn]
+     * @param numPoints number of input points
+     * @return array of noise values. One value for each (xi,yi,zi,wi) input point
      */
     public native double[] noise4Classic(double[] points, int numPoints);
 
     /**
-     * 4D OpenSimplex2F noise, with XY and ZW forming orthogonal triangular-based planes.
-     * Recommended for 3D terrain, where X and Y (or Z and W) are horizontal.
-     * Recommended for noise(x, y, sin(time), cos(time)) trick.
+     * Calls native noise4XYBeforeZW function.
+     * @param points must be in the form of [x0,y0,z0,w0,x1,y1,z1,w1,....xn,yn,zn,wn]
+     * @param numPoints number of input points
+     * @return array of noise values. One value for each (xi,yi,zi,wi) input point
      */
     public native double[] noise4XYBeforeZW(double[] points, int numPoints);
 
     /**
-     * 4D OpenSimplex2F noise, with XZ and YW forming orthogonal triangular-based planes.
-     * Recommended for 3D terrain, where X and Z (or Y and W) are horizontal.
+     * Calls native noise4XZBeforeYW function.
+     * @param points must be in the form of [x0,y0,z0,w0,x1,y1,z1,w1,....xn,yn,zn,wn]
+     * @param numPoints number of input points
+     * @return array of noise values. One value for each (xi,yi,zi,wi) input point
      */
     public native double[] noise4XZBeforeYW(double[] points, int numPoints);
 
     /**
-     * 4D OpenSimplex2F noise, with XYZ oriented like noise3_Classic,
-     * and W for an extra degree of freedom. W repeats eventually.
-     * Recommended for time-varied animations which texture a 3D object (W=time)
+     * Calls native noise4XYZBeforeW function.
+     * @param points must be in the form of [x0,y0,z0,w0,x1,y1,z1,w1,....xn,yn,zn,wn]
+     * @param numPoints number of input points
+     * @return array of noise values. One value for each (xi,yi,zi,wi) input point
      */
     public native double[] noise4XYZBeforeW(double[] points, int numPoints);
 }
