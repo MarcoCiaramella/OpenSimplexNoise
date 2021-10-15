@@ -17,7 +17,7 @@ allprojects {
 Add the dependency
 ```
 dependencies {
-  implementation 'com.github.MarcoCiaramella:OpenSimplexNoise:1.0.0'
+  implementation 'com.github.MarcoCiaramella:OpenSimplexNoise:X.X.X'
 }
 ```
 
