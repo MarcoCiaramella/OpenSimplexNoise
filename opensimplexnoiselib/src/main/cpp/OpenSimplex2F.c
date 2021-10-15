@@ -660,9 +660,9 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3Classic(JNIEnv* env, job
 	double* noise = (double*) malloc(sizeof(double) * num_points);
 	for (int i = 0; i < num_points; i++){
 
-		double xd = body[i*2];
-		double yd = body[i*2 + 1];
-		double zd = body[i*2 + 2];
+		double xd = body[i*3];
+		double yd = body[i*3 + 1];
+		double zd = body[i*3 + 2];
 
 		// Re-orient the cubic lattices via rotation, to produce the expected look on cardinal planar slices.
 		// If texturing objects that don't tend to have cardinal plane faces, you could even remove this.
@@ -703,9 +703,9 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XYBeforeZ(JNIEnv* env, j
 	double* noise = (double*) malloc(sizeof(double) * num_points);
 	for (int i = 0; i < num_points; i++){
 
-		double xd = body[i*2];
-		double yd = body[i*2 + 1];
-		double zd = body[i*2 + 2];
+		double xd = body[i*3];
+		double yd = body[i*3 + 1];
+		double zd = body[i*3 + 2];
 
 		// Re-orient the cubic lattices without skewing, to make X and Y triangular like 2D.
 		// Orthonormal rotation. Not a skew transform.
@@ -748,9 +748,9 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise3XZBeforeY(JNIEnv* env, j
 	double* noise = (double*) malloc(sizeof(double) * num_points);
 	for (int i = 0; i < num_points; i++){
 
-		double xd = body[i*2];
-		double yd = body[i*2 + 1];
-		double zd = body[i*2 + 2];
+		double xd = body[i*3];
+		double yd = body[i*3 + 1];
+		double zd = body[i*3 + 2];
 
 		// Re-orient the cubic lattices without skewing, to make X and Z triangular like 2D.
 		// Orthonormal rotation. Not a skew transform.
@@ -944,10 +944,10 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4Classic(JNIEnv* env, job
 	double* noise = (double*) malloc(sizeof(double) * num_points);
 	for (int i = 0; i < num_points; i++){
 
-		double xd = body[i*2];
-		double yd = body[i*2 + 1];
-		double zd = body[i*2 + 2];
-		double wd = body[i*2 + 3];
+		double xd = body[i*4];
+		double yd = body[i*4 + 1];
+		double zd = body[i*4 + 2];
+		double wd = body[i*4 + 3];
 
 		// Get points for A4 lattice
 		double s = -0.138196601125011 * (xd + yd + zd + wd);
@@ -982,10 +982,10 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYBeforeZW(JNIEnv* env, 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
 	for (int i = 0; i < num_points; i++){
 
-		double xd = body[i*2];
-		double yd = body[i*2 + 1];
-		double zd = body[i*2 + 2];
-		double wd = body[i*2 + 3];
+		double xd = body[i*4];
+		double yd = body[i*4 + 1];
+		double zd = body[i*4 + 2];
+		double wd = body[i*4 + 3];
 
 		double s2 = (xd + yd) * -0.178275657951399372 + (zd + wd) * 0.215623393288842828;
 		double t2 = (zd + wd) * -0.403949762580207112 + (xd + yd) * -0.375199083010075342;
@@ -1019,10 +1019,10 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XZBeforeYW(JNIEnv* env, 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
 	for (int i = 0; i < num_points; i++){
 
-		double xd = body[i*2];
-		double yd = body[i*2 + 1];
-		double zd = body[i*2 + 2];
-		double wd = body[i*2 + 3];
+		double xd = body[i*4];
+		double yd = body[i*4 + 1];
+		double zd = body[i*4 + 2];
+		double wd = body[i*4 + 3];
 
 		double s2 = (xd + zd) * -0.178275657951399372 + (yd + wd) * 0.215623393288842828;
 		double t2 = (yd + wd) * -0.403949762580207112 + (xd + zd) * -0.375199083010075342;
@@ -1057,10 +1057,10 @@ Java_com_jnoise_opensimplexnoiselib_OpenSimplex2F_noise4XYZBeforeW(JNIEnv* env, 
 	double* noise = (double*) malloc(sizeof(double) * num_points);
 	for (int i = 0; i < num_points; i++){
 
-		double xd = body[i*2];
-		double yd = body[i*2 + 1];
-		double zd = body[i*2 + 2];
-		double wd = body[i*2 + 3];
+		double xd = body[i*4];
+		double yd = body[i*4 + 1];
+		double zd = body[i*4 + 2];
+		double wd = body[i*4 + 3];
 
 		double xyz = xd + yd + zd;
 		double ww = wd * 0.2236067977499788;
